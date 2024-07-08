@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    New Releases
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>New Releases</h1>
+        <p class="text-dark">Discover the latest music releases.</p>
+        <ul class="list">
+            {% for album in albums %}
+            <li>
+                <img src="{{ album.images[0].url }}" alt="{{ album.name }} artwork" width="100">
+                <p class="info"><strong>{{ album.name }}</strong> by {{ album.artists[0].name }}</p>
+                <p style="text-align: center; text-transform: capitalize; flex: 1"><strong>{{ album.album_type }}</strong></p>
+                <p class="info"><strong>Release Date: </strong>{{ album.release_date }}</p>
+                <a href="{{ album.external_urls.spotify }}" class="btn btn-outline-danger" target="_blank" rel="noopener noreferrer">Discover</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

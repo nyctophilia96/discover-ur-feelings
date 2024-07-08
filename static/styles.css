@@ -1,0 +1,231 @@
+body {
+    font-family: sans-serif; /* Sets the font family for the entire document */
+    background: url('/static/bg.jpg') no-repeat center fixed; /* Applies a background image that covers the entire screen */
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    padding-top: 30px; /* Provides top padding to content */
+    color: #1DB954; /* Sets text color */
+}
+
+/* Defines a class for dark text color */
+.text-dark {
+    color: #191414;
+}
+
+/* Adds padding inside containers */
+.container {
+    padding: 2rem;
+}
+
+/* Adjusts container width on index page */
+.index-page .container {
+    max-width: 100%;
+}
+
+/* Styles for the fixed navigation bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Styles for the navbar brand */
+.navbar-dark .navbar-brand {
+    font-size: 1.5rem;
+    color: #1DB954;
+}
+
+/* Styles for the navbar brand image */
+.navbar-dark .navbar-brand img {
+    margin-right: 10px;
+}
+
+/* Styles for navbar links */
+.navbar-dark .nav-link {
+    margin-top: 3px;
+    color: #FFFFFF;
+}
+
+/* Hover effect for navbar links */
+.navbar-dark .nav-link:hover {
+    color: #1DB954;
+}
+
+/* Styles for list items */
+li {
+    display: flex;
+    align-items: center;
+}
+
+/* Styles for images inside list items */
+li img {
+    border-radius: 5px;
+}
+
+/* Styles for custom dropdown toggle and button */
+.custom-dropdown-toggle,
+#createPlaylistButton {
+    background-color: #1DB954;
+    color: #191414;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+/* Styles specifically for the create playlist button */
+#createPlaylistButton {
+    margin: 0 auto;
+}
+
+/* Hover effect for buttons and dropdowns */
+button:hover,
+.custom-dropdown-toggle:hover,
+#createPlaylistButton:hover {
+    background-color: #14833B;
+}
+
+/* Styles for custom dropdown */
+.custom-dropdown {
+    max-width: 245px;
+}
+
+.custom-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Adds a dropdown indicator */
+.custom-dropdown-toggle::after {
+    content: '▾';
+    font-size: 0.8rem;
+}
+
+/* Styles for the dropdown menu */
+.custom-dropdown-menu {
+    position: absolute;
+    background-color: #343a40;
+    border-radius: 5px;
+    padding: 0;
+    display: none;
+    margin-top: 1px;
+}
+
+/* Styles for dropdown links */
+.custom-dropdown-menu a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+/* Hover effect for dropdown links */
+.custom-dropdown-menu a:hover {
+    background-color: #191414;
+}
+
+/* Displays dropdown menu when activated */
+.custom-dropdown.show .custom-dropdown-menu {
+    display: block;
+}
+
+/* Styles for outline-danger button */
+.btn-outline-danger {
+    border-color: #1DB954;
+    color: #1DB954;
+}
+
+/* Hover effect for outline-danger button */
+.btn-outline-danger:hover {
+    background-color: #1DB954;
+    border-color: #191414;
+    color: #FFFFFF;
+}
+
+/* Styles for list items */
+.list {
+    margin-top: 30px;
+    padding: 0;
+}
+
+/* Styles for list item details */
+.list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Styles for images inside list items */
+.list li img {
+    margin-right: 20px;
+}
+
+/* Hover effect for list items */
+.list li:hover {
+    background-color: #FFFFFF;
+}
+
+/* Styles for list item information section */
+.list .info {
+    flex: 1;
+}
+
+/* Styles for heart icon */
+.heart-icon {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+/* Animation for heart burst effect */
+.heart-icon.heart-burst {
+    animation: heart-burst 0.3s;
+}
+
+/* Keyframes for heart burst animation */
+@keyframes heart-burst {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Additional style for green heart icon */
+.heart-icon.green {
+    width: 16px;
+    height: 14px;
+}
+
+/* Styles for audio player */
+audio {
+    height: 40px;
+    flex: 1;
+    margin-right: 17px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column;
+    }
+    .navbar-nav .nav-item {
+        margin: 0.5rem 0;
+    }
+    .container {
+        padding: 1rem;
+    }
+    .custom-dropdown-menu {
+        min-width: 100%;
+        left: 0;
+    }
+}

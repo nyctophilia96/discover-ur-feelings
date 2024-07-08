@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recommender
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Recommendations</h1>
+        <p class="text-dark">Please select the time range for your recommendations.</p>
+        <div class="custom-dropdown">
+            <button class="custom-dropdown-toggle" type="button" id="timeRangeDropdown">
+                {% if time_range == 'short_term' %}Short Term{% elif time_range == 'medium_term' %}Medium Term{% elif time_range == 'long_term' %}Long Term{% else %}Select Time Range{% endif %}
+            </button>
+            <ul class="custom-dropdown-menu" aria-labelledby="timeRangeDropdown">
+                <li><a href="{{ url_for('recommender', time_range='short_term') }}">Short Term (Last 4 Weeks)</a></li>
+                <li><a href="{{ url_for('recommender', time_range='medium_term') }}">Medium Term (Last 6 Months)</a></li>
+                <li><a href="{{ url_for('recommender', time_range='long_term') }}">Long Term (Last 1 Year)</a></li>
+            </ul>
+        </div>
+        <ul class="list">
+            {% for track in recommendations %}
+                <li>
+                    <img src="{{ track.album.images[0].url }}" alt="{{ track.name }} artwork" width="100">
+                    <p class="info"><strong>{{ track.name }}</strong> by {{ track.artists[0].name }}</p>
+                    <p style="text-align: center; flex: 1"><strong>Popularity: </strong>{{ track.popularity }}%</p>
+                    {% if track.preview_url %}
+                        <audio controls>
+                            <source src="{{ track.preview_url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    {% else %}
+                        <p style="text-align: center; flex: 1; color: #191414; margin-right: 17px">No preview available.</p>
+                    {% endif %}
+                    <img src="/static/heart-64.png" alt="Like" class="heart-icon" onclick="saveTrack('{{ track.id }}', this)">
+                    <a href="{{ track.external_urls.spotify }}" class="btn btn-outline-danger" target="_blank" rel="noopener noreferrer">Discover</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="/recommender" method="POST">
+            <input type="hidden" name="time_range" value="{{ time_range }}">
+            <button id="createPlaylistButton" style="display: none;">Create Playlist</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdown = document.querySelector('.custom-dropdown');
+            var toggle = document.querySelector('.custom-dropdown-toggle');
+            var createPlaylistButton = document.getElementById('createPlaylistButton');
+            var defaultText = 'Select Time Range';
+
+            toggle.addEventListener('click', function () {
+                dropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            function checkRecommendations() {
+                var recommendations = document.querySelectorAll('.list');
+
+                if (recommendations.length > 0 && toggle.textContent.trim() !== defaultText) {
+                    createPlaylistButton.style.display = 'block';
+                } else {
+                    createPlaylistButton.style.display = 'none';
+                }
+            }
+
+            checkRecommendations();
+
+            dropdown.querySelectorAll('a').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    setTimeout(function() {
+                        checkRecommendations();
+                    }, 500);
+                });
+            });
+
+            var observer = new MutationObserver(checkRecommendations);
+            var list = document.querySelector('.list');
+            observer.observe(list, { childList: true });
+        });
+
+        function saveTrack(trackId, element) {
+            fetch(`/save_track/${trackId}`, { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        element.classList.add('heart-burst');
+                        setTimeout(() => {
+                            element.classList.remove('heart-burst');
+                            element.src = "/static/heart-64-after.png";
+                            element.classList.add('green');
+                        }, 300);
+                    } else {
+                        alert('Error saving track.');
+                    }
+                });
+        }
+    </script>
+{% endblock %}

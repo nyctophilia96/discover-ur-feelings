@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Top Artists
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Your Top Artists</h1>
+        <p class="text-dark">Please select the time range for your top artists.</p>
+        <div class="custom-dropdown">
+            <button class="custom-dropdown-toggle" type="button" id="timeRangeDropdown">
+                {% if time_range == 'short_term' %}Short Term{% elif time_range == 'medium_term' %}Medium Term{% elif time_range == 'long_term' %}Long Term{% else %}Select Time Range{% endif %}
+            </button>
+            <ul class="custom-dropdown-menu" aria-labelledby="timeRangeDropdown">
+                <li><a href="{{ url_for('top_artists', time_range='short_term') }}">Short Term (Last 4 Weeks)</a></li>
+                <li><a href="{{ url_for('top_artists', time_range='medium_term') }}">Medium Term (Last 6 Months)</a></li>
+                <li><a href="{{ url_for('top_artists', time_range='long_term') }}">Long Term (Last 1 Year)</a></li>
+            </ul>
+        </div>
+        <ul class="list">
+            {% for artist in top_artists %}
+                <li>
+                    <img src="{{ artist.images[0].url }}" alt="{{ artist.name }} artwork" width="100">
+                    <p class="info"><strong>{{ artist.name }}</strong></p>
+                    <p style="text-transform: capitalize; flex: 1"><strong>Genres: </strong>{{ artist.genres | join(', ') }}</p>
+                    <p style="text-align: center; flex: 1"><strong>Popularity: </strong>{{ artist.popularity }}%</p>
+                    <p class="info"><strong>Followers: </strong>{{ artist.followers.total | number_format }}</p>
+                    <a href="{{ artist.external_urls.spotify }}" class="btn btn-outline-danger" target="_blank" rel="noopener noreferrer">Discover</a>
+                </li>   
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdown = document.querySelector('.custom-dropdown');
+            var toggle = document.querySelector('.custom-dropdown-toggle');
+        
+            toggle.addEventListener('click', function () {
+                dropdown.classList.toggle('show');
+            });
+        
+            document.addEventListener('click', function (event) {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        });
+    </script>            
+{% endblock %}

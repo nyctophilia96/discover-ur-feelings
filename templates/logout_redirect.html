@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Logging Out...
+{% endblock %}
+
+{% block main %}
+    <head>
+        <meta http-equiv="refresh" content="1;url={{ url_for('index') }}">
+        <script>
+            window.onload = function() {
+                window.open("https://accounts.spotify.com/tr/logout", "_blank");
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Logging Out...</h1>
+            <p class="text-dark">If you are not redirected automatically, <a href="{{ url_for('index') }}">click here</a>.</p>
+        </div>
+    </body>
+{% endblock %}

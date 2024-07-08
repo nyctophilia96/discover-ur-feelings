@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+    <body class="index-page">
+        <div class="container">
+            {% if session['user_info'] %}
+                <h1>Welcome to Discover ur Feelings {{ session['user_info']['display_name'] }}!</h1>
+            {% else %}
+                <h1>Welcome to Discover ur Feelings!</h1>
+            {% endif %}
+            <p class="text-dark" style="margin-top: 20px;">Discover UR Feelings is your personalized music discovery platform, designed to help you explore and enhance your listening experience based on your unique preferences. By logging in with your Spotify account, you can easily view your most played songs and artists over short, medium, and long-term periods.</p>
+            <p class="text-dark">Here's what you can do on Discover ur Feelings:</p>
+            <p><strong>Discover New Releases</strong><span class="text-dark">: Explore the latest albums and singles as they debut.</span></p>
+            <p><strong>Personalized Platform</strong><span class="text-dark">: View your listening habits across different time periods.</span></p>
+            <p><strong>Tailored Recommendations</strong><span class="text-dark">: Get song recommendations based on your selected listening period.</span></p>
+            <p><strong>Library Integration</strong><span class="text-dark">: Like your recommended songs and add them directly to your Spotify library.</span></p>
+            <p><strong>Playlist Creation</strong><span class="text-dark">: Create a playlist with all your recommended songs and save it to your Spotify account with just one click.</span></p>
+            <p class="text-dark">Discover ur Feelings makes discovering new music fun and effortless. Dive into your musical journey today!</p>
+        </div>
+    </body>   
+{% endblock %}
